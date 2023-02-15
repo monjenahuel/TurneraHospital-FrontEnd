@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style/style.css">
+    <title>Hospital Sweet Medical</title>
+</head>
+<body>
+    <header>
+        <img src="src/Sweet-medica-logo-png.png" alt="">
+        <nav>
+            <ul>
+                <li><a class="pagActiva" href="turnos.html">Turnos</a></li>
+                <li><a href="pacientes.html">Pacientes</a></li>
+                <li><a href="">Calendario</a></li>
+                <li><a href="">Estadisticas</a></li>
+            </ul>
+        </nav>
+        <div class="user">
+            <p>UserName</p>
+            <img class="userImage" src="src/1eJ1q0V.jpg" alt="">
+            <i class="fa-solid fa-chevron-down"></i>
+            
+        </div>
+    </header>
+
+    <div class="buscarYAgregar">
+        <button id="agregarTurno">Agregar Turno</button>
+        <input type="search" name="nombre" id="nombre" placeholder="Soy un buscador">
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Paciente</th>
+                <th>DNI</th>
+                <th>Especialidad</th>
+                <th>Profesional</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Editar</th>
+                <th>Borrar</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <script type="module" src="main.js"></script>
+</body>
+</html>
