@@ -1,6 +1,8 @@
 import { pxDB } from "./database.js"
+import { turnDB } from "./database.js"
 
 let pacientes = JSON.parse(localStorage.getItem("pacientes")) || pxDB
+let turnos = JSON.parse(localStorage.getItem("turnos")) || turnDB
 
 cargarBDPacientes()
 
@@ -130,6 +132,7 @@ async function editarPx(id){
             let email = document.getElementById('email').value
             eliminarPX(id)
             crearPX(name,dni,telefono,email)
+            //localStorage.setItem("turnos", JSON.stringify(turnos))
             taskComplete()
         }
         })
