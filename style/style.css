@@ -1,0 +1,113 @@
+
+header{
+    padding: 0px !important; 
+    display: flex;
+    margin-bottom: 1%;
+    justify-content: space-around;
+    align-items: center;
+    height: 130px;
+    background-color: #09526B;
+}
+
+header img{
+    max-width: 300px;
+    max-height:70px;
+}
+
+header .userImage{
+    border-radius: 50%;
+}
+
+nav{
+    width: 50%;
+}
+
+nav ul{
+    width: 100%;
+    display: flex;
+    justify-content: space-around
+}
+
+a:hover{
+    color: #d6eef6;
+}
+
+i:hover{
+    color: hsl(195deg, 85%, 41%);
+}
+
+a.pagActiva:hover{
+    text-decoration: underline;
+    text-decoration-thickness: 4px;
+    text-underline-offset:15px;
+    color: #d6eef6;
+}
+
+.user{
+    display: flex;
+}
+
+.user p{
+    margin-right: 20px;
+    margin-top: 26px;    
+}
+
+.user i{
+    margin-top: 26px;    
+    margin-left: 4px;
+    height: fit-content;
+}
+
+.pagActiva{
+    text-decoration: underline;
+    text-decoration-thickness: 4px;
+    text-underline-offset:15px;
+    
+}
+
+.buscarYAgregar{
+    display: flex;
+    justify-content: space-around;
+}
+
+.buscarYAgregar button{
+    width: auto;
+    max-height: 60px;
+}
+.buscarYAgregar input{
+    width: 75%;
+}
+
+.registroTurno{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    background-color: rgb(43, 52, 52);
+    justify-content: space-between;
+    text-align: center;
+}
+
+a{
+    color: #5AC9EE;
+}
+
+p{
+    color: #d6eef6;
+}
+
+/* .swal2-container{
+} */
+
+.swal2-popup{
+    border: 5px solid rgb(10, 42, 57);
+    width: 70%;
+}
+
+/* #swal2-html-container{
+} */
+
+
+
+
+
+
