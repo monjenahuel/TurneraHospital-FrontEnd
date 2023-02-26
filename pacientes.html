@@ -24,7 +24,8 @@
             </ul>
         </nav>
         <div class="user">
-            <p>UserName</p>
+            <p>Username</p>
+            <script>document.querySelector(".user p").textContent = localStorage.getItem("username")</script>
             <img class="userImage" src="src/1eJ1q0V.jpg" alt="">
             <i class="fa-solid fa-chevron-down"></i>
             
@@ -33,7 +34,7 @@
 
     <div class="buscarYAgregar">
         <button id="agregarPx">Agregar Paciente</button>
-        <input type="search" name="nombre" id="nombre" placeholder="Soy un buscador">
+        <input type="search" name="buscador" id="buscador" placeholder="Soy un buscador">
     </div>
 
     <table>
@@ -53,6 +54,7 @@
         
             
         </tbody>
+        
     </table>
     <script type="module" src="pacientes.js"></script>
 </body>

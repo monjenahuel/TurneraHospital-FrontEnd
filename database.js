@@ -1,90 +1,187 @@
-const pacientes = [
-    {
-        id:0,
-        nombre: "Ricardo Di Mortadela",
-        dni: "35826931",
-        telefono: "4450-4664",
-        email: "Mortadela@gmail.com"
-    },
-    {
-        id:1,
-        nombre: "Jon Ricardo Darin",
-        dni: "99999999",
-        telefono: "4459-8888",
-        email: "RDarin@gmail.com"
-    },
-    {
-        id:2,
-        nombre: "Marcelo Fort",
-        dni: "33333333",
-        telefono: "1123881095",
-        email: "laFortNeta@gmail.com"
-    },
-    {
-        id:3,
-        nombre: "Kiro Lazilla",
-        dni: "00101101",
-        telefono: "1180808080",
-        email: "gamerPlease@gmail.com"
-    }
+let especialidades = [
+	{
+		"idEspecialidad" : 4,
+		"nombreEspecialidad" : "Cardiologia"
+	},
+	{
+		"idEspecialidad" : 5,
+		"nombreEspecialidad" : "Cirugia"
+	},
+	{
+		"idEspecialidad" : 1,
+		"nombreEspecialidad" : "Clinica"
+	},
+	{
+		"idEspecialidad" : 6,
+		"nombreEspecialidad" : "Diabetologia"
+	},
+	{
+		"idEspecialidad" : 10,
+		"nombreEspecialidad" : "Enfermeria"
+	},
+	{
+		"idEspecialidad" : 3,
+		"nombreEspecialidad" : "Kinesiologia"
+	},
+	{
+		"idEspecialidad" : 7,
+		"nombreEspecialidad" : "Neurologia"
+	},
+	{
+		"idEspecialidad" : 9,
+		"nombreEspecialidad" : "Psicologia"
+	},
+	{
+		"idEspecialidad" : 8,
+		"nombreEspecialidad" : "Psiquiatria"
+	},
+	{
+		"idEspecialidad" : 2,
+		"nombreEspecialidad" : "Traumatologia"
+	}
 ]
-
-let turnos = [
-    {
-        id: 0,
-        nombre: pacientes[0].nombre,
-        dni: pacientes[0].dni,
-        especialidad:"Otorrinolaringologia",
-        profesional: "Dr Moreira",
-        fecha: "2023-02-17",
-        hora: "10:00"
-    },
-    {
-        id: 1,
-        nombre: pacientes[1].nombre,
-        dni: pacientes[1].dni,
-        especialidad:"Cardiologia",
-        profesional: "Dr Guitierrez",
-        fecha: "2023-02-27",
-        hora: "15:00"
-    },
-    {
-        id: 2,
-        nombre: pacientes[2].nombre,
-        dni: pacientes[2].dni,
-        especialidad:"Clinico",
-        profesional: "Dr Gonzalez",
-        fecha: "2023-02-28",
-        hora: "18:00"
-    }
-]
-
-let especialidades = ["Kinesiologia","Cardiologia","Dermatologia","Otorrinolaringologia","Clinico","Cirugia"]
 
 let profesionales = [
-    {
-        nombre: "Dr Moreira",
-        especialidades: ["Clinico"]
-    },
-    {
-        nombre: "Klgo Fort",
-        especialidades: ["Kinesiologia"]
-    },
-    {
-        nombre: "Dr Rivera",
-        especialidades: ["Otorrinolaringologia","Cardiologia","Clinico"]
-    },
-    {
-        nombre: "Dr Hibbert",
-        especialidades: ["Clinico","Cardiologia","Cirugia"]
-    },
-    {
-        nombre: "Dr House",
-        especialidades: especialidades
-    }
+	{
+		"idProfesional" : 1,
+		"nombre" : "Lief",
+		"apellido" : "Hartigan",
+		"matricula" : "8438762832"
+	},
+	{
+		"idProfesional" : 2,
+		"nombre" : "Lucho",
+		"apellido" : "Yelyashev",
+		"matricula" : "8880059009"
+	},
+	{
+		"idProfesional" : 3,
+		"nombre" : "Kort",
+		"apellido" : "Smail",
+		"matricula" : "0100885861"
+	},
+	{
+		"idProfesional" : 4,
+		"nombre" : "Aldrich",
+		"apellido" : "Whipple",
+		"matricula" : "3605249027"
+	},
+	{
+		"idProfesional" : 5,
+		"nombre" : "Ines",
+		"apellido" : "Skipper",
+		"matricula" : "3643493975"
+	},
+	{
+		"idProfesional" : 6,
+		"nombre" : "Mable",
+		"apellido" : "Gorham",
+		"matricula" : "2612335927"
+	},
+	{
+		"idProfesional" : 7,
+		"nombre" : "Lexine",
+		"apellido" : "Bottinelli",
+		"matricula" : "7642813554"
+	},
+	{
+		"idProfesional" : 8,
+		"nombre" : "Patsy",
+		"apellido" : "Matley",
+		"matricula" : "3669252037"
+	},
+	{
+		"idProfesional" : 9,
+		"nombre" : "Vlad",
+		"apellido" : "Muscat",
+		"matricula" : "4030070884"
+	},
+	{
+		"idProfesional" : 10,
+		"nombre" : "Duffy",
+		"apellido" : "Greschke",
+		"matricula" : "4298894738"
+	}
 ]
 
-export {pacientes as pxDB}
-export {turnos as turnDB}
+let especialidades_profesionales = [
+	{
+		"idespecialidades_profesional" : 1,
+		"idEspecialidad" : 3,
+		"idProfesional" : 10
+	},
+	{
+		"idespecialidades_profesional" : 2,
+		"idEspecialidad" : 7,
+		"idProfesional" : 3
+	},
+	{
+		"idespecialidades_profesional" : 3,
+		"idEspecialidad" : 9,
+		"idProfesional" : 5
+	},
+	{
+		"idespecialidades_profesional" : 4,
+		"idEspecialidad" : 1,
+		"idProfesional" : 8
+	},
+	{
+		"idespecialidades_profesional" : 5,
+		"idEspecialidad" : 3,
+		"idProfesional" : 6
+	},
+	{
+		"idespecialidades_profesional" : 6,
+		"idEspecialidad" : 2,
+		"idProfesional" : 9
+	},
+	{
+		"idespecialidades_profesional" : 7,
+		"idEspecialidad" : 5,
+		"idProfesional" : 6
+	},
+	{
+		"idespecialidades_profesional" : 8,
+		"idEspecialidad" : 4,
+		"idProfesional" : 3
+	},
+	{
+		"idespecialidades_profesional" : 9,
+		"idEspecialidad" : 8,
+		"idProfesional" : 6
+	},
+	{
+		"idespecialidades_profesional" : 10,
+		"idEspecialidad" : 2,
+		"idProfesional" : 7
+	},
+	{
+		"idespecialidades_profesional" : 11,
+		"idEspecialidad" : 10,
+		"idProfesional" : 6
+	},
+	{
+		"idespecialidades_profesional" : 12,
+		"idEspecialidad" : 6,
+		"idProfesional" : 1
+	},
+	{
+		"idespecialidades_profesional" : 13,
+		"idEspecialidad" : 6,
+		"idProfesional" : 3
+	},
+	{
+		"idespecialidades_profesional" : 14,
+		"idEspecialidad" : 1,
+		"idProfesional" : 4
+	},
+	{
+		"idespecialidades_profesional" : 15,
+		"idEspecialidad" : 7,
+		"idProfesional" : 10
+	}
+]
+
 export {especialidades as especialidadesDB}
 export {profesionales as profesionalesDB}
+export {especialidades_profesionales as espProf}

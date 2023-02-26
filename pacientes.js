@@ -1,54 +1,74 @@
-import { pxDB } from "./database.js"
-import { turnDB } from "./database.js"
+import { cargarPxSQL } from "./fetchPacientes.js"
+import { crearPxSQL } from "./fetchPacientes.js"
+import { editarPxSQL } from "./fetchPacientes.js"
+import { tokenValido } from "./fetchUsuarios.js"
 
-let pacientes = JSON.parse(localStorage.getItem("pacientes")) || pxDB
-let turnos = JSON.parse(localStorage.getItem("turnos")) || turnDB
+document.onreadystatechange = () => {
+    if(!tokenValido(localStorage.getItem("token"))){
+        window.stop()
+        document.body.innerHTML = "<h1>INVALID TOKEN<h1>"
+    }
+}
 
-cargarBDPacientes()
+let buscador = document.getElementById("buscador")
+
+let pacientes = await cargarPxSQL(buscador.value)
+
+
+DibujarBDPacientes()
 
 document.getElementById("agregarPx").addEventListener("click",() => {
     formCrearPX()
 })
 
+buscador.addEventListener("change",() => {
+    pacientes = cargarPxSQL(buscador.value)
+})
 
-function crearPX(nombre,dni,telefono,email){
-    let arrayDeIDs = pacientes.map( (p) =>{
-        return p.id
-    })
-    let maximoID = Math.max(...arrayDeIDs)
-    
+
+async function actualizarBBDDPX(){
+    pacientes = await cargarPxSQL(buscador.value) //Actualiza la referencia a la BBDD
+    DibujarBDPacientes()                            //Redibuja los registros
+}
+
+async function crearPX(nombre,dni,telefono,email,apellido){
     let paciente = 
     {
-        id: maximoID+1,
-        nombre: nombre,
+        apellido: apellido,
         dni: dni,
+        email: email,
+        nombre: nombre,
         telefono: telefono,
-        email: email
+        idPaciente: null
     }
-    pacientes.push(paciente)
-    localStorage.setItem("pacientes", JSON.stringify(pacientes))
-    cargarBDPacientes()
+    await crearPxSQL(paciente) //Sube el PX a la base de datos
+    actualizarBBDDPX() // Actualiza la referencia a la Base y vuelve a dibujar los registros
+}
+
+async function editarPx(nombre,dni,telefono,email,apellido,idPaciente){
+    let paciente = 
+    {
+        apellido: apellido,
+        dni: dni,
+        email: email,
+        nombre: nombre,
+        telefono: telefono,
+        idPaciente: idPaciente
+    }
+    await editarPxSQL(paciente) //Edita el PX de la base de datos
+    actualizarBBDDPX() // Actualiza la referencia a la Base y vuelve a dibujar los registros
 }
 
 
-function cargarBDPacientes() {
+function DibujarBDPacientes() {
     let cuerpoTabla  = document.querySelector("table tbody")
+    
     cuerpoTabla.textContent = ""
 
     //Itera la base de px y los va agregando al cuerpo de la tabla
     for(let i = 0;i<pacientes.length;i++){
-        // let plantilla = 
-        // `<td>${pacientes[i].nombre}</td>
-        // <td>${pacientes[i].dni}</td>
-        // <td>${pacientes[i].telefono}</td>
-        // <td>${pacientes[i].email}</td>
-        // <td><i class="fa-solid fa-pen-to-square"></i></td>`
-        // let nuevoPX = document.createElement("tr")
-        // nuevoPX.innerHTML = plantilla
-        // cuerpoTabla.appendChild(nuevoPX)
         dibujarUnPx(i)
     } 
-
 }
 
 function dibujarUnPx(i){
@@ -58,9 +78,9 @@ function dibujarUnPx(i){
     let dni = document.createElement("td")
     let telefono = document.createElement("td")
     let email = document.createElement("td")
-    let id = pacientes[i].id
+    let id = pacientes[i].idPaciente
 
-    nombre.textContent = `${pacientes[i].nombre}`
+    nombre.textContent = `${pacientes[i].nombre + " " + pacientes[i].apellido}`
     dni.textContent = `${pacientes[i].dni}`
     telefono.textContent = `${pacientes[i].telefono}`
     email.textContent = `${pacientes[i].email}`
@@ -78,7 +98,7 @@ function dibujarUnPx(i){
     nuevoPX.appendChild(botonEditar)
 
     iconoEditar.addEventListener("click",() =>{
-        editarPx(id)
+        formEditarPx(id)
     })
 
     cuerpoTabla.appendChild(nuevoPX)
@@ -89,8 +109,10 @@ async function formCrearPX(){
         title: 'Ingresar un turno',
         html:
         `<div id="div1">
-            <label for="name">Nombre y Apellido:</label>
+            <label for="name">Nombre:</label>
             <input type:"text" name="name" id="name">
+            <label for="apellido">Apellido:</label>
+            <input type:"text" name="apellido" id="apellido">
             <label for="dni">DNI:</label>
             <input type:"number" name="dni" id="dni">
             <label for="telefono">Telefono:</label>
@@ -106,16 +128,17 @@ async function formCrearPX(){
             showCloseButton: true,
         preConfirm: () => {
             let name = document.getElementById('name').value
+            let apellido = document.getElementById('apellido').value
             let dni = document.getElementById('dni').value
             let telefono = document.getElementById('telefono').value
             let email = document.getElementById('email').value
-            crearPX(name,dni,telefono,email)
+            crearPX(name,dni,telefono,email,apellido)
             taskComplete()
         }
         })
 }
 
-async function editarPx(id){
+async function formEditarPx(id){
     const {} = await Swal.fire({
         title: 'Editar Paciente',
         html:editarHtmlPX(id),
@@ -127,45 +150,49 @@ async function editarPx(id){
             showCloseButton: true,
         preConfirm: () => {
             let name = document.getElementById('paciente').value
+            let apellido = document.getElementById('apellido').value
             let dni = document.getElementById('dni').value
             let telefono = document.getElementById('telefono').value
             let email = document.getElementById('email').value
-            eliminarPX(id)
-            crearPX(name,dni,telefono,email)
-            //localStorage.setItem("turnos", JSON.stringify(turnos))
+            editarPx(name,dni,telefono,email,apellido,id)
             taskComplete()
         }
         })
 }
 
+
+
 function eliminarPX(id){
-    let indiceAEliminar = pacientes.findIndex((t) => t.id == id)
+    let indiceAEliminar = pacientes.findIndex((p) => p.idPaciente == id)
         pacientes.splice(indiceAEliminar,1)
-        localStorage.setItem("pacientes", JSON.stringify(pacientes))
-        cargarBDPacientes()
+        //localStorage.setItem("pacientes", JSON.stringify(pacientes))
+        actualizarBBDDPX()
 }
 
 function editarHtmlPX(id){
+    let indicePXCliqueado = pacientes.findIndex((p) => p.idPaciente == id) || 0
 
-    console.log("ID del PX",id)
-    console.log(pacientes.map((p) =>{
-        p.dni
-    }))
-
-    let indicePXCliqueado = pacientes.findIndex((p) => p.id == id) || 0
-
-    console.log("IndiceClickeado",indicePXCliqueado)
-
-    //Label Paciente
+    //Label nombre
     let labelPaciente = document.createElement("label")
     labelPaciente.setAttribute("for","paciente")
-    labelPaciente.textContent = "Nombre y Apellido:"
+    labelPaciente.textContent = "Nombre:"
 
-    //Select de pacientes
+    //Select de nombre
     let inputPX = document.createElement("input");
     inputPX.setAttribute("id","paciente")
     inputPX.setAttribute("name","paciente")
     inputPX.setAttribute("value",`${pacientes[indicePXCliqueado].nombre}`)
+
+    //Label apellido
+    let labelApellido = document.createElement("label")
+    labelApellido.setAttribute("for","apellido")
+    labelApellido.textContent = "Apellido:"
+    
+    //Select de apellido
+    let inputApellido = document.createElement("input");
+    inputApellido.setAttribute("id","apellido")
+    inputApellido.setAttribute("name","apellido")
+    inputApellido.setAttribute("value",`${pacientes[indicePXCliqueado].apellido}`)
 
     //Lable de DNI
     let labelDNI = document.createElement("label")
@@ -207,6 +234,8 @@ function editarHtmlPX(id){
 
     container.appendChild(labelPaciente)
     container.appendChild(inputPX)
+    container.appendChild(labelApellido)
+    container.appendChild(inputApellido)
     container.appendChild(labelDNI)
     container.appendChild(inputDNI)
     container.appendChild(labelTelefono)
@@ -235,4 +264,9 @@ function taskComplete(){
         title: 'Paciente cargado'
     })
 }
+
+export {pacientes as pacientes}
+
+
+
 

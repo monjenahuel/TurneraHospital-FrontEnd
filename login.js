@@ -1,35 +1,33 @@
-document.addEventListener("submit", (event) => {
+import { validarUsuariosSQL } from "./fetchUsuarios.js";
+
+window.addEventListener("load",() => localStorage.clear());
+
+document.addEventListener("submit", async (event) => {
     event.preventDefault();
+    
     let email = document.getElementById("email").value
     let pass = document.getElementById("password").value
-    validarInicioDeSesion(email,pass)
+    let usuarioIngresado = crearUsuario(email,pass)
+    
+    await validarInicioDeSesionJS(usuarioIngresado)
 })
 
-function validarInicioDeSesion(email,pass){
-    if(email === "admin@admin.com" && pass === "1234"){
+async function validarInicioDeSesionJS(usuario){
+    let usuarioRespuesta = await validarUsuariosSQL(usuario)
+
+    if(usuarioRespuesta.token){
+        localStorage.setItem('token', usuarioRespuesta.token);
+        localStorage.setItem('username', usuarioRespuesta.username);
         animacionLogueo()
-        //window.location.href = "index.html"
     }else{
         credencialesIncorrectas();
     }
 }
 
-async function pedirEmail(){
 
-    const { value: email } = await Swal.fire({
-        title: 'Ingrese su correo',
-        input: 'email',
-        inputLabel: 'Email',
-        inputPlaceholder: 'Ingrese su Email'
-    })
-    if (email) {
-        Swal.fire(`Correo de recuperacion enviado`)
-    }
-}
-
-const promise1 = new Promise((resolve, reject) => {
-    resolve('Success!');
-});
+// const promise1 = new Promise((resolve, reject) => {
+//     resolve('Success!');
+// });
 
 async function credencialesIncorrectas(){
     let inputs = document.getElementsByTagName("input")
@@ -63,6 +61,14 @@ function animacionLogueo(){
     }).then(() => {
         window.location.href = "turnos.html"
     })
+}
+
+function crearUsuario(email,pass){
+    let user={
+        username: email,
+        password: pass
+    }
+    return user
 }
 
 

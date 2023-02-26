@@ -24,7 +24,8 @@
             </ul>
         </nav>
         <div class="user">
-            <p>UserName</p>
+            <p>Username</p>
+            <script>document.querySelector(".user p").textContent = localStorage.getItem("username")</script>
             <img class="userImage" src="src/1eJ1q0V.jpg" alt="">
             <i class="fa-solid fa-chevron-down"></i>
             
@@ -33,7 +34,7 @@
 
     <div class="buscarYAgregar">
         <button id="agregarTurno">Agregar Turno</button>
-        <input type="search" name="nombre" id="nombre" placeholder="Soy un buscador">
+        <input type="search" name="search" id="search" placeholder="Buscar">
     </div>
 
     <table>
@@ -52,6 +53,6 @@
         <tbody>
         </tbody>
     </table>
-    <script type="module" src="main.js"></script>
+    <script type="module" src="turnos.js"></script>
 </body>
 </html>
