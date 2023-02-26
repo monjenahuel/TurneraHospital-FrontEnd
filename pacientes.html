@@ -25,8 +25,8 @@
         </nav>
         <div class="user">
             <p>Username</p>
-            <script>document.querySelector(".user p").textContent = localStorage.getItem("username")</script>
-            <img class="userImage" src="src/1eJ1q0V.jpg" alt="">
+            <script>document.querySelector(".user p").textContent = sessionStorage.getItem("username")</script>
+            <img class="userImage" src="https://picsum.photos/200" alt="">
             <i class="fa-solid fa-chevron-down"></i>
             
         </div>
@@ -34,7 +34,7 @@
 
     <div class="buscarYAgregar">
         <button id="agregarPx">Agregar Paciente</button>
-        <input type="search" name="buscador" id="buscador" placeholder="Soy un buscador">
+        <input class="search" type="search" name="searchpx" id="searchpx" placeholder="Buscar">
     </div>
 
     <table>

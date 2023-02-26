@@ -9,18 +9,36 @@ import { tokenValido } from "./fetchUsuarios.js"
 
 //Validacion del token
 document.onreadystatechange = () => {
-        if(!tokenValido(localStorage.getItem("token"))){
+        if(!tokenValido(sessionStorage.getItem("token"))){
             window.stop()
             document.body.innerHTML = "<h1>INVALID TOKEN<h1>"
         }
     }
+
 //Buscador
-    let buscador = document.querySelector("#search")
-    buscador.addEventListener("input",async () => {
+let buscador = document.querySelector("#search")
+buscador.addEventListener("input",async () => {
+turnos = await cargarTurnosSQL(buscador.value)
+cargarBDTurnos()
+})
+
+let switchTurnos = document.querySelector("#switch-1");
+
+switchTurnos.addEventListener('change', async () => {
+if (switchTurnos.checked) {
     turnos = await cargarTurnosSQL(buscador.value)
     cargarBDTurnos()
+  } else {
+    let currentDate = new Date().toJSON().slice(0, 10);
 
-})
+    let tratandoDeFiltrar = await cargarTurnosSQL(buscador.value)
+
+    turnos = tratandoDeFiltrar.filter( t => t.fechaHora.slice(" ",10) == currentDate)
+    cargarBDTurnos()
+  }
+});
+
+
 
 let especialidadesDB = await cargarEspecialidadesSQL();
 
@@ -72,14 +90,15 @@ function cargarBDTurnos() {
     cuerpoTabla.textContent = ""
 
     //Itera la base de turnos y los va agregando al cuerpo de la tabla
+    let arrayDeFechas = []
     
     for(let i = 0;i<turnos.length;i++){
-        dibujarUnTurno(i)
+        dibujarUnTurno(i,arrayDeFechas)
     } 
 
 }
 
-function dibujarUnTurno(i){
+function dibujarUnTurno(i,array){
     let cuerpoTabla  = document.querySelector("table tbody")
     
     let nombre = document.createElement("td")
@@ -117,6 +136,7 @@ function dibujarUnTurno(i){
     nuevoTurno.appendChild(botonEditar)
     nuevoTurno.appendChild(botonEliminar)
 
+
     iconoEliminar.addEventListener("click",() => {
         confirmarYEliminarTurno(id)
     })
@@ -125,7 +145,45 @@ function dibujarUnTurno(i){
         formEditarTurno(id)
     })
 
-    cuerpoTabla.appendChild(nuevoTurno)
+    let fechaIteracion = turnos[i].fechaHora.split(" ",2)[0]
+    if(!array.includes(fechaIteracion)){
+        let tr = document.createElement("tr")
+        let td = document.createElement("td")
+        td.innerHTML = `<p>${fechaIteracion}</p>`
+        tr.setAttribute("class","trFecha")
+        td.setAttribute("class","tdFecha")
+
+
+        array.push(fechaIteracion)
+        tr.appendChild(document.createElement("td"))
+        tr.appendChild(document.createElement("td"))
+        tr.appendChild(document.createElement("td"))
+        td.innerHTML = `<p>${fechaIteracion}</p>`
+        tr.appendChild(td)
+        tr.appendChild(document.createElement("td"))
+        tr.appendChild(document.createElement("td"))
+        tr.appendChild(document.createElement("td"))
+        tr.appendChild(document.createElement("td"))
+        cuerpoTabla.appendChild(tr)
+        cuerpoTabla.appendChild(nuevoTurno)
+    }else{
+        cuerpoTabla.appendChild(nuevoTurno)
+    }
+    
+    // let fechaIteracion = turnos[i].fechaHora.split(" ",2)[0]
+    // if(!array.includes(fechaIteracion)){
+    //     let div = document.createElement("div")
+    //     div.innerHTML = `<p>${fechaIteracion}</p>`
+    //     div.setAttribute("class","divFecha")
+    //     div.appendChild(nuevoTurno)
+    //     array.push(fechaIteracion)
+    //     console.log("Creado div")
+    //     cuerpoTabla.appendChild(div)
+    // }else{
+    //     console.log("Ya existe div del dia")
+    //     cuerpoTabla.appendChild(nuevoTurno)
+    // }
+   
 }
 
 function confirmarYEliminarTurno(id){

@@ -25,17 +25,42 @@
         </nav>
         <div class="user">
             <p>Username</p>
-            <script>document.querySelector(".user p").textContent = localStorage.getItem("username")</script>
-            <img class="userImage" src="src/1eJ1q0V.jpg" alt="">
+            <script>document.querySelector(".user p").textContent = sessionStorage.getItem("username")</script>
+            <img class="userImage" src="https://picsum.photos/200" alt="">
             <i class="fa-solid fa-chevron-down"></i>
-            
         </div>
     </header>
 
     <div class="buscarYAgregar">
         <button id="agregarTurno">Agregar Turno</button>
-        <input type="search" name="search" id="search" placeholder="Buscar">
+        
+        <input class="search" type="search" name="search" id="search" placeholder="Buscar">
+        
+        <div id="switchTurno">
+            <label for="switch-1">
+                Hoy
+                <input type="checkbox" id="switch-1" name="switch-1" role="switch" checked="">
+                Todos
+            </label>
+        </div>
+        <!-- <input type="radio" id="allturnos" name="cuantosTurnos">Hola
+        <input type="radio" id="soloHoy" name="cuantosTurnos">Chau
+        <input type="button" value="Xdddddd" onclick="filtrarPorDia()> -->
+        
+        <!-- <div class="radioTurnos">   
+            <div>   
+                <input type="radio" id="Todos" name="cuantosTurnos" value="Todos" checked>
+                <label for="Todos">Todos</label>
+            </div>
+            <div>
+                <input type="radio" id="Hoy" name="cuantosTurnos" value="Hoy">
+                <label for="Hoy">Hoy</label>
+            </div>
+        </div>  -->
     </div>
+
+        
+  
 
     <table>
         <thead>

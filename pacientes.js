@@ -4,13 +4,13 @@ import { editarPxSQL } from "./fetchPacientes.js"
 import { tokenValido } from "./fetchUsuarios.js"
 
 document.onreadystatechange = () => {
-    if(!tokenValido(localStorage.getItem("token"))){
+    if(!tokenValido(sessionStorage.getItem("token"))){
         window.stop()
         document.body.innerHTML = "<h1>INVALID TOKEN<h1>"
     }
 }
 
-let buscador = document.getElementById("buscador")
+let buscador = document.getElementById("searchpx")
 
 let pacientes = await cargarPxSQL(buscador.value)
 
@@ -165,7 +165,6 @@ async function formEditarPx(id){
 function eliminarPX(id){
     let indiceAEliminar = pacientes.findIndex((p) => p.idPaciente == id)
         pacientes.splice(indiceAEliminar,1)
-        //localStorage.setItem("pacientes", JSON.stringify(pacientes))
         actualizarBBDDPX()
 }
 

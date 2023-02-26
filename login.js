@@ -1,6 +1,6 @@
 import { validarUsuariosSQL } from "./fetchUsuarios.js";
 
-window.addEventListener("load",() => localStorage.clear());
+window.addEventListener("load",() => sessionStorage.clear());
 
 document.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -16,8 +16,8 @@ async function validarInicioDeSesionJS(usuario){
     let usuarioRespuesta = await validarUsuariosSQL(usuario)
 
     if(usuarioRespuesta.token){
-        localStorage.setItem('token', usuarioRespuesta.token);
-        localStorage.setItem('username', usuarioRespuesta.username);
+        sessionStorage.setItem('token', usuarioRespuesta.token);
+        sessionStorage.setItem('username', usuarioRespuesta.username);
         animacionLogueo()
     }else{
         credencialesIncorrectas();
